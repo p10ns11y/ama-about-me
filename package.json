@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "@dotenvx/dotenvx": "^1.14.0",
+    "@langchain/community": "^0.2.33",
     "@langchain/groq": "^0.0.17",
     "@langchain/ollama": "^0.0.4",
     "@langchain/openai": "^0.2.10",
+    "chromadb": "^1.8.1",
     "langchain": "^0.2.19",
     "typescript": "^5.6.2"
   }
