@@ -13,12 +13,14 @@ After completing `Langchain chat with your data` (uses ipython jupyter notebook)
 - [x] Embed and create vector store
 - [x] Retrieve using in-memory and Chroma db
 - [x] Feed retrieval chain to LLMs and did question and got answer
+- [x] Asked followup with chat history
 - [x] Displayed result
+- [x] Load multiple documents (PDFs)
 
 ### TODOs
 
 - [ ] Load different types of documents
-- [ ] PDFs, text files, web pages (publicly available and sharable)
+  - [ ] PDFs, text files, web pages (publicly available and sharable)
 - [ ] Relevant Memoirs text
 - [ ] Frequently asked questions
 - [ ] No Personally Identifiable Information (PIIs) of others in the
@@ -56,6 +58,8 @@ https://js.langchain.com/v0.2/docs/integrations/vectorstores/chroma/
 https://js.langchain.com/v0.2/docs/tutorials/rag
 
 https://js.langchain.com/v0.2/docs/integrations/chat/
+
+https://js.langchain.com/v0.2/docs/integrations/document_loaders/file_loaders/multi_file/
 
 ### Course completitions and accomplishments
 
