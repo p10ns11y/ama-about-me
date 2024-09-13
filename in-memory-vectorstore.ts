@@ -1,13 +1,13 @@
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 
 import { createRetrievalChain } from 'langchain/chains/retrieval';
-import { RetrievalQAChain } from 'langchain/chains';
 import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 
 import { ChatGroq } from '@langchain/groq';
 
 import type { Document } from 'langchain/document';
+import type { BaseMessage } from '@langchain/core/messages';
 import type { OllamaEmbeddings } from '@langchain/ollama';
 
 export async function retrieveUsingInMemory(
@@ -76,13 +76,40 @@ export async function retrieveUsingInMemory(
     retriever: maximumMarginalRelevanceRetriever,
   });
 
-  let answer = await retrievalChain.invoke({
-    input: 'One sentence for the evolution of programming',
+  let firstQuestion = 'One sentence for the evolution of programming';
+
+  let chatHistory = [] as BaseMessage[] | string;
+  let chatmodelOutput = await retrievalChain.invoke({
+    input: firstQuestion,
+    chat_history: chatHistory,
+  });
+
+  chatHistory = [
+    ...chatHistory,
+    ...[
+      chatmodelOutput.input,
+      chatmodelOutput.answer,
+      // Testing it capability
+      'There are so many buzz and threadful articles and news',
+    ],
+  ] as BaseMessage[];
+
+  let followUpQuestion =
+    'Will programming be still important skill, say in 2 years, given there are so much negative news floating around?';
+
+  let followUpOutput = await retrievalChain.invoke({
+    input: followUpQuestion,
+    chat_history: chatHistory,
   });
 
   // Display
   console.log('From simple retriever...', result.flat(), '-----\n');
-  console.log('From retrieval chain...', answer, '-----\n');
+  console.log('From retrieval chain...', chatmodelOutput, '-----\n');
+  console.log(
+    'Follow up query with chat histroy...\n',
+    followUpOutput,
+    '-----\n'
+  );
 
   console.log('---- In Memory Store end ---- \n\n');
 }
