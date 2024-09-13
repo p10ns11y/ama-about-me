@@ -1,5 +1,12 @@
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 
+import { createRetrievalChain } from 'langchain/chains/retrieval';
+import { RetrievalQAChain } from 'langchain/chains';
+import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
+import { ChatPromptTemplate } from '@langchain/core/prompts';
+
+import { ChatGroq } from '@langchain/groq';
+
 import type { Document } from 'langchain/document';
 import type { OllamaEmbeddings } from '@langchain/ollama';
 
@@ -47,9 +54,35 @@ export async function retrieveUsingInMemory(
     ),
   ]);
 
-  // TODO: Send the user question with retrived documents, chat history to ChatModels
+  // Send the user question with retrived documents, chat history to ChatModels
+  // LLM
+  let llm = new ChatGroq({
+    model: 'mixtral-8x7b-32768',
+    temperature: 0,
+  });
+
+  // Prompt and retrieval chain
+  let prompt = ChatPromptTemplate.fromTemplate(
+    `Answer the user's question: {input} based on the following context {context}`
+  );
+
+  let combineDocsChain = await createStuffDocumentsChain({
+    llm,
+    prompt,
+  });
+
+  let retrievalChain = await createRetrievalChain({
+    combineDocsChain,
+    retriever: maximumMarginalRelevanceRetriever,
+  });
+
+  let answer = await retrievalChain.invoke({
+    input: 'One sentence for the evolution of programming',
+  });
 
   // Display
-  console.log(result.flat());
+  console.log('From simple retriever...', result.flat(), '-----\n');
+  console.log('From retrieval chain...', answer, '-----\n');
+
   console.log('---- In Memory Store end ---- \n\n');
 }

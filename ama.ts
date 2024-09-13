@@ -26,8 +26,6 @@ async function main() {
   await retrieveUsingInMemory(embeddings, splittedDocuments);
   await retrieveUsingChroma(embeddings, splittedDocuments);
 
-  // TODO: Send the user question with retrived documents, chat history to ChatModels
-
   // Display
 }
 
