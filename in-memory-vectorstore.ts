@@ -1,4 +1,6 @@
+import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
+import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 
 import { createRetrievalChain } from 'langchain/chains/retrieval';
 import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
@@ -6,19 +8,29 @@ import { ChatPromptTemplate } from '@langchain/core/prompts';
 
 import { ChatGroq } from '@langchain/groq';
 
-import type { Document } from 'langchain/document';
 import type { BaseMessage } from '@langchain/core/messages';
 import type { OllamaEmbeddings } from '@langchain/ollama';
 
-export async function retrieveUsingInMemory(
-  embeddings: OllamaEmbeddings,
-  documents: Document<Record<string, any>>[]
-) {
+export async function retrieveUsingInMemory(embeddings: OllamaEmbeddings) {
   console.log('---- In Memory Store start ----\n');
+  // Load some documents' content (step1: keep it simple)
+  let textContentLoader = new TextLoader(
+    './data/texts/history-of-programming.txt'
+  );
+  let documents = await textContentLoader.load();
+
+  // Split content,
+  let recursiveSplitter = new RecursiveCharacterTextSplitter({
+    chunkSize: 100,
+    chunkOverlap: 25,
+  });
+
+  let splittedDocuments = await recursiveSplitter.splitDocuments(documents);
+
   const vectorStore = new MemoryVectorStore(embeddings);
 
   // This also creates embeddings for these documents
-  await vectorStore.addDocuments(documents);
+  await vectorStore.addDocuments(splittedDocuments);
 
   // console.log(vectorStore.memoryVectors);
 

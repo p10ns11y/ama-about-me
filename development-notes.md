@@ -78,3 +78,12 @@ https://js.langchain.com/v0.2/docs/integrations/document_loaders/file_loaders/mu
 
 - To choose project license (https://choosealicense.com/licenses/)
 - To monitor langchain apps (https://smith.langchain.com/) (paid service)
+
+### Research papers
+
+- [Bi-temporal Timeline Index: A data structure for Processing Queries on bi-temporal data](https://www.researchgate.net/publication/282921787_Bi-temporal_Timeline_Index_A_data_structure_for_Processing_Queries_on_bi-temporal_data)
+
+- [Temporal Aggregation of Spanning Event Stream: An Extended Framework to Handle the Many Stream Models](https://www.researchgate.net/publication/354241624_Temporal_Aggregation_of_Spanning_Event_Stream_An_Extended_Framework_to_Handle_the_Many_Stream_Models)
+- [Temporal Data Structures for time travel - MIT Computer Science and Artificial Intelligence Laboratory](https://courses.csail.mit.edu/6.851/spring07/scribe/lec07.pdf)
+- [Conversations in Time: Interactive Visualization to Explore Structured Temporal Data](https://rjournal.github.io/articles/RJ-2021-050/RJ-2021-050.pdf)
+- [A new tidy data structure to support exploration and modeling of temporal data](https://arxiv.org/pdf/1901.10257v2)
