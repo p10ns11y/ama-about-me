@@ -16,6 +16,9 @@ After completing `Langchain chat with your data` (uses ipython jupyter notebook)
 - [x] Asked followup with chat history
 - [x] Displayed result
 - [x] Load multiple documents (PDFs)
+- [ ] - Dev environment
+  - [x] Docker
+  - [x] Docker-compose (ollama, chroma)
 
 ### TODOs
 
@@ -28,10 +31,13 @@ After completing `Langchain chat with your data` (uses ipython jupyter notebook)
 - [ ] Social handle links: x, insta, threads, fb (inactive, soon)
 - [ ] When contact info requested such as mobile number, email (Show a form popup/modal or something, ask their contact info and reason and there will be a system where I can see such requests and click send if the person seems legit such as recruiters (linked-in profile) )
 
-- [ ] Automation: Github actions (simple)
+- Dev environment
   - [ ] Docker
   - [ ] Docker-compose (ollama, chroma)
-  - [ ] Infra level (terraform) - need paid api keys
+  - [ ] Enable watch mode for changes and if needed, use multi-stage
+- [ ] Automation: Github actions (simple)
+- [ ] Infra level (terraform) - need paid api keys
+- [ ] GPU optimization for ollama
 - [ ] Transition from cli to Web application
 
   - [ ] Only one page react 19 app with QA support (use latest features whenever wherever it is applicable and introduce relevant link as needed)
