@@ -1,0 +1,27 @@
+# include:
+#   - path: ./infra.yaml
+
+services:
+  amachat:
+    build: .
+    networks:
+      - service-network
+    depends_on:
+      # - chroma
+      - ollama
+    # chroma:
+    #   image: chromadb/chroma
+    # expose:
+    #   - 8000
+    # ports:
+    #   - 8000
+  ollama:
+    image: ollama/ollama
+    networks:
+      - service-network
+    ports:
+      - '11434:11434'
+
+networks:
+  service-network:
+    driver: bridge

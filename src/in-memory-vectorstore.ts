@@ -1,3 +1,6 @@
+import path, { dirname } from 'node:path';
+import { fileURLToPath } from 'url';
+
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
@@ -11,11 +14,17 @@ import { ChatGroq } from '@langchain/groq';
 import type { BaseMessage } from '@langchain/core/messages';
 import type { OllamaEmbeddings } from '@langchain/ollama';
 
+import { getDirectoryName } from './helpers/file-utils';
+
 export async function retrieveUsingInMemory(embeddings: OllamaEmbeddings) {
   console.log('---- In Memory Store start ----\n');
   // Load some documents' content (step1: keep it simple)
+  let __dirname = await getDirectoryName({
+    fileURL: import.meta.url,
+  });
+
   let textContentLoader = new TextLoader(
-    './data/texts/history-of-programming.txt'
+    path.resolve(__dirname, 'data/texts/history-of-programming.txt')
   );
   let documents = await textContentLoader.load();
 

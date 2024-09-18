@@ -1,4 +1,14 @@
 {
+  "name": "Ask me anything about me",
+  "description": "Chatbot answers your questions about me",
+  "author": {
+    "name": "Peramanathan Sathyamoorthy"
+  },
+  "repository": {
+    "url": "https://github.com/p10ns11y/ama-about-me"
+  },
+  "module": "typescript",
+  "type": "module",
   "dependencies": {
     "@dotenvx/dotenvx": "^1.14.0",
     "@langchain/community": "^0.2.33",
@@ -7,6 +17,7 @@
     "@langchain/openai": "^0.2.10",
     "chromadb": "^1.8.1",
     "langchain": "^0.2.19",
+    "ollama": "^0.5.9",
     "pdf-dist": "^1.0.0",
     "typescript": "^5.6.2"
   }
