@@ -27,7 +27,7 @@ export async function chatAboutDocumentsContent({
   console.timeEnd('chroma collection');
 
   // Load multiple different docuemnts
-  let directoryLoader = new DirectoryLoader('./data/pdfs', {
+  let directoryLoader = new DirectoryLoader('src/data/pdfs', {
     '.pdf': (path: string) =>
       new PDFLoader(path, {
         parsedItemSeparator: '\n',
