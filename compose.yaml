@@ -1,26 +1,49 @@
-# include:
-#   - path: ./infra.yaml
+include:
+  - path: ./compose-infra.yaml
 
 services:
-  amachat:
+  amachat-cli:
     build: .
+    command: bun dev:docker
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/ # Check Dockerfile WORKDIR
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    environment:
+      - BASE_OLLAMA_URL=http://ollama:11434
+      - BASE_CHROMA_URL=http://chroma:8000
     networks:
       - service-network
     depends_on:
-      # - chroma
       - ollama
-    # chroma:
-    #   image: chromadb/chroma
-    # expose:
-    #   - 8000
-    # ports:
-    #   - 8000
-  ollama:
-    image: ollama/ollama
+      - chroma
+  amachat-http:
+    build: .
+    command: bun dev:docker:server
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/ # Check Dockerfile WORKDIR
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    environment:
+      - BASE_OLLAMA_URL=http://ollama:11434
+      - BASE_CHROMA_URL=http://chroma:8000
+    ports:
+      - '3000:3000'
     networks:
       - service-network
-    ports:
-      - '11434:11434'
+    depends_on:
+      - ollama
+      - chroma
 
 networks:
   service-network:
