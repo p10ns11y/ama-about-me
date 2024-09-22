@@ -9,6 +9,14 @@
   },
   "module": "typescript",
   "type": "module",
+  "scripts": {
+    "dev": "bun src/ama.ts",
+    "dev:server": "bun src/http-ama-server.ts",
+    "dev:docker": "bun ama.ts",
+    "dev:docker:server": "bun http-ama-server.ts",
+    "node:dev": "node src/ama.ts",
+    "node:dev:server": "node src/http-ama-server.ts"
+  },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.14.0",
     "@langchain/community": "^0.2.33",
