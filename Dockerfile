@@ -11,8 +11,4 @@ COPY src ./
 
 RUN bun install
 
-EXPOSE 11434
-# EXPOSE 8000
-COPY  . /app
-
 CMD bun ama.ts

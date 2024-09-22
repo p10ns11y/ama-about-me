@@ -1,0 +1,20 @@
+services:
+  # For embedding
+  ollama:
+    image: ollama/ollama
+    networks:
+      - service-network
+    ports:
+      - '11434:11434'
+    expose:
+      - 11434
+
+  # Vectorstore
+  chroma:
+    image: 'chromadb/chroma'
+    networks:
+      - service-network
+    ports:
+      - '8000:8000'
+    expose:
+      - 8000
