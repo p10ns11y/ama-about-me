@@ -1,15 +1,26 @@
-import { OllamaEmbeddings } from '@langchain/ollama';
-
 import { Chroma } from '@langchain/community/vectorstores/chroma';
 
+import { getEmbeddings } from './embedding';
+
+let chromaURL = process.env.BASE_CHROMA_URL || 'http://0.0.0.0:8000';
+
 let documentsVectorStore: Chroma | null = null;
-export function getChromaVectorStore({ cache } = { cache: true }) {
-  let embeddings = new OllamaEmbeddings({});
+
+type Options = {
+  cache: boolean;
+  collectionName?: string;
+};
+
+let embeddingsPromise = getEmbeddings();
+
+export async function getChromaVectorStore(options: Options = { cache: true }) {
+  let { cache, collectionName = 'default-collection' } = options;
+  let embeddings = await embeddingsPromise;
 
   if (!documentsVectorStore || !cache) {
     documentsVectorStore = new Chroma(embeddings, {
-      collectionName: 'pdfdocuments-collections',
-      url: 'http://localhost:8000',
+      collectionName,
+      url: chromaURL,
     });
   }
 

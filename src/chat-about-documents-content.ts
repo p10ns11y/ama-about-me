@@ -1,4 +1,8 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { DirectoryLoader } from 'langchain/document_loaders/fs/directory';
+import { TextLoader } from 'langchain/document_loaders/fs/text';
 
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { ContextualCompressionRetriever } from 'langchain/retrievers/contextual_compression';
@@ -15,48 +19,74 @@ import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
 import type { BaseMessage } from '@langchain/core/messages';
 import type { Chroma } from '@langchain/community/vectorstores/chroma';
 
-export async function chatAboutDocumentsContent({
-  getVectorStore,
-}: {
-  getVectorStore: (options?: { cache: boolean }) => Chroma;
-}) {
-  console.log('---- Chroma Store start ---- \n\n');
-  console.time('chroma collection');
+import { getChromaVectorStore } from './chroma-vectorstore';
+import { getDirectoryName } from './helpers/file-utils';
 
-  console.log('---- documentsVectorStore created ---- \n\n');
-  console.timeEnd('chroma collection');
+type Options = {
+  getVectorStore?: (options?: { cache: boolean }) => Promise<Chroma>;
+};
+
+export async function chatAboutDocumentsContent(options: Options = {}) {
+  let { getVectorStore = getChromaVectorStore } = options;
+
+  let __filename = fileURLToPath(import.meta.url);
+
+  console.log(__filename, '\n---- Chroma Store start ---- \n\n');
+
+  // Load some documents' content (step1: keep it simple)
+  let __dirname = await getDirectoryName({
+    fileURL: import.meta.url,
+  });
 
   // Load multiple different docuemnts
-  let directoryLoader = new DirectoryLoader('src/data/pdfs', {
-    '.pdf': (path: string) =>
-      new PDFLoader(path, {
-        parsedItemSeparator: '\n',
-        splitPages: true,
-        pdfjs: () =>
-          // @ts-ignore no type defs for pdf-dist yet
-          import('pdf-dist/build/pdf.js').then((module) => module.default),
-      }),
-  });
+  let directoryLoader = new DirectoryLoader(
+    path.resolve(__dirname, 'data/texts'),
+    {
+      // when embedding pdf documents contents via containerized ollama timeout occurs
+      '.pdf': (path: string) =>
+        new PDFLoader(path, {
+          parsedItemSeparator: '\n',
+          splitPages: true,
+          pdfjs: () =>
+            // @ts-ignore no type defs for pdf-dist yet
+            import('pdf-dist/build/pdf.js').then((module) => module.default),
+        }),
+      '.txt': (path: string) => new TextLoader(path),
+    }
+  );
 
   let recursiveSplitter = new RecursiveCharacterTextSplitter({
     chunkSize: 300,
     chunkOverlap: 50,
   });
 
-  let pdfDocuments = await directoryLoader.load();
+  let textDocuments = await directoryLoader.load();
 
-  console.log('total pdfDocuments', pdfDocuments.length);
+  console.log(__filename, 'total TextDocuments', textDocuments.length);
   // Default get the cached vectorstore
-  let documentsVectorStore = getVectorStore();
-  let splittedPdfDocuments = await recursiveSplitter.splitDocuments(
-    pdfDocuments
+  let documentsVectorStore = await getVectorStore({
+    cache: false,
+    collectionName: 'text-document-content-collections',
+  });
+  let splittedTextDocuments = await recursiveSplitter.splitDocuments(
+    textDocuments
   );
 
-  console.log('total splittedPdfDocuments', splittedPdfDocuments.length);
+  console.log(
+    __filename,
+    '\ntotal splittedTextDocuments',
+    splittedTextDocuments.length
+  );
 
-  console.log('---- Adding and embedding documents ---- \n\n');
+  console.log(__filename, '\n---- Adding and embedding documents ---- \n\n');
+
   console.time('add and embed documents');
-  await documentsVectorStore.addDocuments(splittedPdfDocuments);
+  if (process.env.BASE_OLLAMA_URL) {
+    // When run via docker timeout occurs when there are so much tex segments
+    await documentsVectorStore.addDocuments(splittedTextDocuments.slice(0, 10));
+  } else {
+    await documentsVectorStore.addDocuments(splittedTextDocuments);
+  }
   console.timeEnd('add and embed documents');
 
   // Compression
@@ -73,13 +103,14 @@ export async function chatAboutDocumentsContent({
     }),
   });
 
-  let compressedDocs = await contextualRetriver.invoke(
-    'What is more challenging for LLM app developers?'
-  );
+  let firstQuestion = 'What are important skills for programmers?';
+
+  let compressedDocs = await contextualRetriver.invoke(firstQuestion);
 
   console.log(
-    'compressed and contextual relevant documents',
-    compressedDocs,
+    __filename,
+    '\ncompressed and contextual relevant documents\n',
+    compressedDocs.map((contentList) => contentList.pageContent),
     '\n\n'
   );
 
@@ -98,10 +129,8 @@ export async function chatAboutDocumentsContent({
     retriever: contextualRetriver,
   });
 
-  let firstQuestion = 'What is more challenging for LLM app developers?';
-
   let chatHistory = [] as BaseMessage[] | string;
-  console.log('retrieving...');
+  console.log(__filename, '\nretrieving...\n');
   console.time('retrieval');
   let chatmodelOutput = await retrievalChain.invoke({
     input: firstQuestion,
@@ -115,28 +144,47 @@ export async function chatAboutDocumentsContent({
       chatmodelOutput.input,
       chatmodelOutput.answer,
       // Testing it capability
-      'There are so many buzz and threadful articles and news',
+      'There are so many buzz and threatful articles and news',
     ],
   ] as BaseMessage[];
 
-  let followUpQuestion = 'How to overcome the development challenges?';
+  let followUpQuestion =
+    'What are the best adaptation strategies for developers ?';
 
-  console.log('follow up...');
+  console.log(__filename, '\nfollow up...\n');
   console.time('followup');
   let followUpOutput = await retrievalChain.invoke({
     input: followUpQuestion,
     chat_history: chatHistory,
   });
-
   console.timeEnd('followup');
 
   // Display
-  console.log('From retrieval chain...', chatmodelOutput, '-----\n');
   console.log(
-    'Follow up query with chat histroy...\n',
-    followUpOutput,
-    '-----\n'
+    __filename,
+    '\nFrom retrieval chain...\n',
+    {
+      input: chatmodelOutput.input,
+      result: chatmodelOutput.context.map(
+        (contentList) => contentList.pageContent
+      ),
+      answer: chatmodelOutput.answer,
+    },
+    '\n-----\n'
+  );
+  console.log(
+    __filename,
+    '\nFollow up query with chat history...\n',
+    {
+      input: followUpOutput.input,
+      chat_history: followUpOutput.chat_history,
+      result: followUpOutput.context.map(
+        (contentList) => contentList.pageContent
+      ),
+      answer: followUpOutput.answer,
+    },
+    '\n-----\n'
   );
 
-  console.log('---- Chroma Store end ---- \n\n');
+  console.log(__filename, '\n---- Chroma Store end ---- \n\n');
 }
