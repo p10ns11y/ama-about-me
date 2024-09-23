@@ -27,4 +27,5 @@ jobs:
         # Will bun is available in this step
         run: |
           ls $pwd
+          $HOME/.bun/bin/bun install
           $HOME/.bun/bin/bun ./src/ama.ts
