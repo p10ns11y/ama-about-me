@@ -11,6 +11,8 @@ jobs:
       run:
         working-directory: ./
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
       - name: Install bun
         run: curl -fsSL https://bun.sh/install | bash
       - name: List files in home
@@ -18,7 +20,9 @@ jobs:
       - name: List files in action folder
         run: ls ${{ github.path }}
       - name: List the files in the present working directory
-        run: ls $pwd
+        run: echo $pwd
+      - name: List files in src directory
+        run: ls ./src
       - name: Build and run the app
         # Will bun is available in this step
         run: |
