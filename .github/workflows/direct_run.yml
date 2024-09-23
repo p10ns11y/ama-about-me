@@ -13,4 +13,6 @@ jobs:
          echo "$HOME/.bun/bin" >> $GITHUB_PATH
          curl -fsSL https://bun.sh/install | bash
          source $HOME/.bashrc
-         bun dev
+         echo $PATH
+         echo $GITHUB_PATH
+         $HOME/.bun/bin/bun --help
