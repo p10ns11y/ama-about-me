@@ -14,4 +14,4 @@ jobs:
          curl -fsSL https://bun.sh/install | bash
          source $HOME/.bashrc
          ls
-         $HOME/.bun/bin/bun src/ama.ts
+         $HOME/.bun/bin/bun ${{ github.workspace}}/src/ama.ts
