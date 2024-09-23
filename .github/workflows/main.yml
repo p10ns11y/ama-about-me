@@ -1,7 +1,7 @@
 on:
   pull_request:
     branches:
-      - main
+      - 09-19-debug_and_make_the_model_pull_successfull_from_app
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
     #     working-directory: ./
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2 
+        uses: actions/checkout@v4 
       - name: Build and start
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
