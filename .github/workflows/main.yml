@@ -5,8 +5,14 @@ on:
 
 jobs:
   build:
-     name: Build and run services for LLM app
-     runs-on: ubuntu-latest
-     steps:
-       - run: docker compose --file ${{ github.action_path }}/compose.yaml up --build
+    name: Build and run services for LLM app
+    runs-on: ubuntu-latest
+    steps:
+      - run: docker ps
+    # steps:
+    #   - uses:
+    #       using: 'docker'
+    #       image: 'Dockerfile'
+    #       steps:
+    #            - run: docker compose --file ${{ github.action_path }}/compose.yaml up --build
      
