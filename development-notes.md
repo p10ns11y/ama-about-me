@@ -2,6 +2,11 @@
 
 After completing `Langchain chat with your data` (uses ipython jupyter notebook) where I learned basics and fundamentals for LLM apps, I wanted to build simple app using TypeScript without taking any other course and just by reading docs and source with **intensional struggling**. I plan to take the other course which actually uses langchain.js later. Also I wanted to build it cost-effective (0 dollors so far) using free models and free plans of the services. Instead OpenAPI I am using Ollama for embedding, Chroma as vector store those runs locally in the machine and `Groq` for `chatmodels` (llm+chat) which has free plan for hobby project. Those are not mentioned in the courses and figured out myself.
 
+### Sing-off
+
+Using it only on web so that I will know which I committed from laptop and
+Which are committed directly on Github
+
 ### Done
 
 - [x] Found langchain deeplearning.ai and learned core concepts
