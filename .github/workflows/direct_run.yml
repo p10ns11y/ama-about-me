@@ -1,0 +1,14 @@
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  run:
+    name: Directly run the app
+    runs-on: ubuntu-latest
+    steps:
+     - name: Build and run the app
+       run: |
+         curl -fsSL https://bun.sh/install | bash
+         bun dev
