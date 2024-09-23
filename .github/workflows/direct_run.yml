@@ -1,7 +1,7 @@
 on:
   pull_request:
     branches:
-    - main
+    - 09-19-debug_and_make_the_model_pull_successfull_from_app
 
 jobs:
   run:
