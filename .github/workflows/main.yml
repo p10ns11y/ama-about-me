@@ -8,5 +8,5 @@ jobs:
      name: Build and run services for LLM app
      runs-on: ubuntu-latest
      steps:
-       - run: docker compose --file compose.yaml up --build
+       - run: docker compose --file ${{ github.action_path }}/compose.yaml up --build
      
