@@ -26,6 +26,7 @@ jobs:
       - name: Build and run the app
         # Will bun is available in this step
         run: |
-          ls $pwd
-          $HOME/.bun/bin/bun install
-          $HOME/.bun/bin/bun ./src/ama.ts
+          # ls $pwd
+          # $HOME/.bun/bin/bun install
+          # $HOME/.bun/bin/bun ./src/ama.ts
+          echo "TODO need to run deps separately"
