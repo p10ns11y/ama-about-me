@@ -7,6 +7,9 @@ jobs:
   run:
     name: Directly run the app
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
     steps:
       - name: Install bun
         run: curl -fsSL https://bun.sh/install | bash
