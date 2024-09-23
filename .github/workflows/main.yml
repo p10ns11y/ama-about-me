@@ -7,12 +7,12 @@ jobs:
   build:
     name: Build and run services for LLM app
     runs-on: ubuntu-latest
+    # defaults:
+    #   run:
+    #     working-directory: ./
     steps:
-      - run: docker ps
-    # steps:
-    #   - uses:
-    #       using: 'docker'
-    #       image: 'Dockerfile'
-    #       steps:
-    #            - run: docker compose --file ${{ github.action_path }}/compose.yaml up --build
+      - name: Check out repository
+        uses: actions/checkout@v2 
+      - name: Build and start
+        run: docker compose up --build
      
