@@ -17,6 +17,8 @@ services:
     environment:
       - BASE_OLLAMA_URL=http://ollama:11434
       - BASE_CHROMA_URL=http://chroma:8000
+      - DOCKER_ENV=true
+      - GROQ_API_KEY=${GROQ_API_KEY}
     networks:
       - service-network
     depends_on:
@@ -37,6 +39,9 @@ services:
     environment:
       - BASE_OLLAMA_URL=http://ollama:11434
       - BASE_CHROMA_URL=http://chroma:8000
+      - DOCKER_ENV=true
+      - GROQ_API_KEY=${GROQ_API_KEY}
+
     ports:
       - '3000:3000'
     networks:
