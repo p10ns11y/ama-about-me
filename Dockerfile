@@ -2,7 +2,6 @@ FROM oven/bun:latest
 
 WORKDIR /app
 
-COPY .env ./
 COPY package.json ./
 COPY package-lock.json ./
 COPY bun.lockb ./
