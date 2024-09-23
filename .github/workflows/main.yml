@@ -1,0 +1,12 @@
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+     name: Build and run services for LLM app
+     runs-on: ubuntu-latest
+     steps:
+       - run: docker compose up --build
+     
