@@ -1,17 +1,23 @@
 on:
   pull_request:
     branches:
-    - 09-19-debug_and_make_the_model_pull_successfull_from_app
+      - 09-19-debug_and_make_the_model_pull_successful_from_app
 
 jobs:
   run:
     name: Directly run the app
     runs-on: ubuntu-latest
     steps:
-     - name: Build and run the app
-       run: |
-         echo "$HOME/.bun/bin" >> $GITHUB_PATH
-         curl -fsSL https://bun.sh/install | bash
-         source $HOME/.bashrc
-         ls
-         $HOME/.bun/bin/bun ${{ github.workspace}}/src/ama.ts
+      - name: Install bun
+        run: curl -fsSL https://bun.sh/install | bash
+      - name: List files in home
+        run: ls $HOME
+      - name: List files in action folder
+        run: ls ${{ github.path }}
+      - name: List the files in the present working directory
+        run: ls $pwd
+      - name: Build and run the app
+        # Will bun is available in this step
+        run: |
+          ls $pwd
+          $HOME/.bun/bin/bun src/ama.ts
