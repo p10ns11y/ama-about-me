@@ -13,5 +13,5 @@ jobs:
          echo "$HOME/.bun/bin" >> $GITHUB_PATH
          curl -fsSL https://bun.sh/install | bash
          source $HOME/.bashrc
-         cat $HOME/.bashrc
+         ls
          $HOME/.bun/bin/bun src/ama.ts
