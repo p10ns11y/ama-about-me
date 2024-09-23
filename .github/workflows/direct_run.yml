@@ -23,4 +23,4 @@ jobs:
         # Will bun is available in this step
         run: |
           ls $pwd
-          $HOME/.bun/bin/bun src/ama.ts
+          $HOME/.bun/bin/bun ./src/ama.ts
