@@ -1,3 +1,4 @@
+// Testing temporarily gone stack PR merge
 import React, { useEffect, useState } from 'react';
 
 const TaskAndUserSearch = () => {
@@ -10,18 +11,18 @@ const TaskAndUserSearch = () => {
   useEffect(() => {
     setLoading(true);
     fetch(`/search?query=${encodeURIComponent(searchQuery)}`)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setTasks(data.tasks);
         setUsers(data.users);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error.message);
         setLoading(false);
       });
@@ -46,7 +47,7 @@ const TaskAndUserSearch = () => {
       />
       <h3>Tasks</h3>
       <ul>
-        {tasks.map(task => (
+        {tasks.map((task) => (
           <li key={task.id}>
             <p>{task.description}</p>
           </li>
@@ -54,7 +55,7 @@ const TaskAndUserSearch = () => {
       </ul>
       <h3>Users</h3>
       <ul>
-        {users.map(user => (
+        {users.map((user) => (
           <li key={user.id}>
             <p>{user.name}</p>
           </li>
