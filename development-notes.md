@@ -53,13 +53,13 @@ Which are committed directly on Github
 - [ ] Speech to text (voice chat)
 
 - Production
-  - [] Render the inital page immediately, 
+  - [ ] Render the inital page immediately, 
        keep some sort service availablity bootup UI (ollama and chroma)
        When available let the user interact
-  - [] Deploy to a PaaS
-  - [] Use OpenAI for embedding instead of Ollama
-  - [] Auto deploy main to PaaS
-  - [] Use Terraform and AWS (IaaS) to deploy and serve models such as llama3.2 (Sagemaker, Bedrock)
+  - [ ] Deploy to a PaaS
+  - [ ] Use OpenAI for embedding instead of Ollama
+  - [ ] Auto deploy main to PaaS
+  - [ ] Use Terraform and AWS (IaaS) to deploy and serve models such as llama3.2 (Sagemaker, Bedrock)
 
 Advacned learning TODOs:
 
