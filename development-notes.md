@@ -95,6 +95,10 @@ https://html.spec.whatwg.org/multipage/server-sent-events.html#eventsource-push
 
 https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream
 
+#### Javascript
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates
+
 ### Course completitions and accomplishments
 
 [Langchain chat with your data (jupyter ipython notebook) course](https://learn.deeplearning.ai/courses/langchain-chat-with-your-data/lesson/1/introduction)- [(completion certificate)](https://learn.deeplearning.ai/accomplishments/f72f24f1-9ad2-4bc0-b8c2-33cbecb81ec2?usp=sharing)
