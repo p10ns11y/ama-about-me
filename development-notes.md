@@ -21,9 +21,15 @@ Which are committed directly on Github
 - [x] Asked followup with chat history
 - [x] Displayed result
 - [x] Load multiple documents (PDFs)
-- [ ] - Dev environment
+- [x] - Dev environment
   - [x] Docker
   - [x] Docker-compose (ollama, chroma)
+  - [x] Enable watch mode for changes and if needed
+- [ ] Transition from cli to Web application
+  - [x] Simple server without any framework or fullstack app setup
+  - [x] Non render blocking Server side rendering
+  - [x] Server Send Events for dependent service availablity status
+
 
 ### TODOs
 
@@ -37,24 +43,31 @@ Which are committed directly on Github
 - [ ] When contact info requested such as mobile number, email (Show a form popup/modal or something, ask their contact info and reason and there will be a system where I can see such requests and click send if the person seems legit such as recruiters (linked-in profile) )
 
 - Dev environment
-  - [ ] Docker
-  - [ ] Docker-compose (ollama, chroma)
-  - [ ] Enable watch mode for changes and if needed, use multi-stage
+  - [ ] Use multi-stage docker build
 - [ ] Automation: Github actions (simple)
 - [ ] Infra level (terraform) - need paid api keys
 - [ ] GPU optimization for ollama
 - [ ] Transition from cli to Web application
-
   - [ ] Only one page react 19 app with QA support (use latest features whenever wherever it is applicable and introduce relevant link as needed)
-
 - [ ] Image usage and creation\* (use limited existing or relevant images in the rendering result, expensive and protect against possible misuse)
 - [ ] Speech to text (voice chat)
+
+- Production
+  - [] Render the inital page immediately, 
+       keep some sort service availablity bootup UI (ollama and chroma)
+       When available let the user interact
+  - [] Deploy to a PaaS
+  - [] Use OpenAI for embedding instead of Ollama
+  - [] Auto deploy main to PaaS
+  - [] Use Terraform and AWS (IaaS) to deploy and serve models such as llama3.2 (Sagemaker, Bedrock)
 
 Advacned learning TODOs:
 
 - [ ] Learn more about embedding (latent-positioning) mathematically (theoritical)
 
 ### References
+
+#### LLMs and orchestrators
 
 https://v02.api.js.langchain.com/classes/_langchain_community.vectorstores_chroma.Chroma.html
 
@@ -72,13 +85,21 @@ https://js.langchain.com/v0.2/docs/integrations/chat/
 
 https://js.langchain.com/v0.2/docs/integrations/document_loaders/file_loaders/multi_file/
 
+#### Web
+
+https://web.dev/articles/eventsource-basics
+
+https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#event_stream_format
+
+https://html.spec.whatwg.org/multipage/server-sent-events.html#eventsource-push
+
+https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream
+
 ### Course completitions and accomplishments
 
-[Langchain chat with your data (jupyter ipython notebook) course](https://learn.deeplearning.ai/courses/langchain-chat-with-your-data/lesson/1/introduction)
+[Langchain chat with your data (jupyter ipython notebook) course](https://learn.deeplearning.ai/courses/langchain-chat-with-your-data/lesson/1/introduction)- [(completion certificate)](https://learn.deeplearning.ai/accomplishments/f72f24f1-9ad2-4bc0-b8c2-33cbecb81ec2?usp=sharing)
 
-[Langchain chat with your data (completion certificate)](https://learn.deeplearning.ai/accomplishments/f72f24f1-9ad2-4bc0-b8c2-33cbecb81ec2?usp=sharing)
-
-[Build llm apps with langchain js](https://learn.deeplearning.ai/courses/build-llm-apps-with-langchain-js/lesson/1/introduction) (will start soon)
+[Build llm apps with langchain js](https://learn.deeplearning.ai/courses/build-llm-apps-with-langchain-js) - [(completion certificate)](https://learn.deeplearning.ai/accomplishments/14907d64-9ff2-4dc7-b5f7-ce42982f8551?usp=sharing)
 
 ### Services
 
