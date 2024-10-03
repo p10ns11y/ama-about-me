@@ -17,10 +17,6 @@ type EventData = {
     _unusedStrings: TemplateStringsArray, 
     ...events: Array<Event>
   ) {
-  console.log({
-    _unusedStrings,
-    events
-  })
   let eventStreamContent = events.map(event => {
     let value;
 
