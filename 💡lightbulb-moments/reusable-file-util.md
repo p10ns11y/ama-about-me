@@ -1,6 +1,6 @@
 # 💡 Light bulb moments
 
-### Reusable file util for getting \_\_dirname from any folder
+#### Reusable file util for getting \_\_dirname from any folder
 
 ```ts
 type Options = {

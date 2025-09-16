@@ -1,3 +1,8 @@
+#### Check if the feature/function is available and run
+
+![auto fill features in check](auto-fill-features.png)
+
+```ts
 let availableFeatures = {
   retrieveUsingInMemory: (await import('./in-memory-vectorstore'))
     .retrieveUsingInMemory,
@@ -7,9 +12,10 @@ let availableFeatures = {
 
 type Features = keyof typeof availableFeatures;
 
-// Better rename it to run or checkAndRun
-export async function check(...features: Features[]) {
+export async function run(...features: Features[]) {
   for (let feature of features) {
     void availableFeatures?.[feature]?.();
   }
 }
+```
+

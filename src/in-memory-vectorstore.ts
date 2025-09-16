@@ -161,4 +161,13 @@ export async function retrieveUsingInMemory() {
   );
 
   console.log(__filename, '---- In Memory Store end ---- \n\n');
+
+  return {
+    input: followUpOutput.input,
+    chat_history: followUpOutput.chat_history,
+    result: followUpOutput.context.map(
+      (contentList) => contentList.pageContent
+    ),
+    answer: followUpOutput.answer,
+  }
 }
